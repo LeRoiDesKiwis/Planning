@@ -5,7 +5,7 @@ import fr.leroideskiwis.planning.PlanningElement;
 
 public class CorruptedPlanningElement implements PlanningElement {
 
-    private String line;
+    private final String line;
 
     public CorruptedPlanningElement(String line) {
         this.line = line;

@@ -17,8 +17,8 @@ public class Anime implements PlanningElement {
     private final Day day;
     private final int hour;
     private final int minutes;
-    private int totalEpisodes;
-    private LocalDate firstAiring;
+    private final int totalEpisodes;
+    private final LocalDate firstAiring;
 
     private Anime(String name, Day day, int hour, int minutes, LocalDate firstAiring, int totalEpisodes){
         this.name = name;
