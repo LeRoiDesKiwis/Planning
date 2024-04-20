@@ -1,6 +1,7 @@
 package fr.leroideskiwis.planning.anime;
 
 import fr.leroideskiwis.Day;
+import fr.leroideskiwis.planning.CorruptedPlanningElement;
 import fr.leroideskiwis.planning.PlanningElement;
 import fr.leroideskiwis.planning.PlanningParser;
 

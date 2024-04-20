@@ -1,7 +1,6 @@
-package fr.leroideskiwis.planning.anime;
+package fr.leroideskiwis.planning;
 
 import fr.leroideskiwis.Day;
-import fr.leroideskiwis.planning.PlanningElement;
 
 public class CorruptedPlanningElement implements PlanningElement {
 
