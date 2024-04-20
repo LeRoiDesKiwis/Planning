@@ -1,0 +1,2 @@
+# Planning
+Projet modélisant un planning avec des évènements etc. Le but étant de s'entrainer à l'abstraction et autres concepts de base de la poo. Par exemple, ici, il est facile d'ajouter un autre type d'élément autre que les animes, ou de faire en sorte de parser d'un autre endroit (par exemple une bdd sql au lieu d'un simple fichier)
