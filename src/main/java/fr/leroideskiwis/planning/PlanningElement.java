@@ -11,4 +11,9 @@ public interface PlanningElement {
     String name();
     String time();
     String nextOcurrence();
+    void display(DisplayType type);
+
+    enum DisplayType {
+        DAY, NEXT_AIRING, LAST_AIRING
+    }
 }

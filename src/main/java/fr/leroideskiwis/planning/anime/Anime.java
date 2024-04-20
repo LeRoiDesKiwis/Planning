@@ -3,10 +3,15 @@ package fr.leroideskiwis.planning.anime;
 import fr.leroideskiwis.Day;
 import fr.leroideskiwis.planning.PlanningElement;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+
+import static fr.leroideskiwis.util.Util.print;
 
 public class Anime implements PlanningElement {
 
@@ -14,12 +19,16 @@ public class Anime implements PlanningElement {
     private final Day day;
     private final int hour;
     private final int minutes;
+    private int totalEpisodes;
+    private LocalDate firstAiring;
 
-    private Anime(String name, Day day, int hour, int minutes){
+    private Anime(String name, Day day, int hour, int minutes, LocalDate firstAiring, int totalEpisodes){
         this.name = name;
         this.day = day;
         this.hour = hour;
         this.minutes = minutes;
+        this.firstAiring = firstAiring;
+        this.totalEpisodes = totalEpisodes;
     }
 
     @Override
@@ -56,6 +65,13 @@ public class Anime implements PlanningElement {
         return String.format("%s:%s", beautifyTime(hour), beautifyTime(minutes));
     }
 
+    public String until(LocalDateTime now, LocalDateTime date){
+        long daysUntilNextOccurrence = now.until(date, ChronoUnit.DAYS);
+        long hoursUntilNextOccurrence = now.until(date, ChronoUnit.HOURS) % 24;
+        long minutesUntilNextOccurrence = now.until(date, ChronoUnit.MINUTES) % 60;
+        return String.format("%d days, %d hours, and %d minutes", daysUntilNextOccurrence, hoursUntilNextOccurrence, minutesUntilNextOccurrence);
+    }
+
     @Override
     public String nextOcurrence() {
         LocalDateTime now = LocalDateTime.now();
@@ -67,10 +83,29 @@ public class Anime implements PlanningElement {
         if (!now.isBefore(nextOccurrence)) {
             nextOccurrence = nextOccurrence.plusDays(7);
         }
-        long daysUntilNextOccurrence = now.until(nextOccurrence, ChronoUnit.DAYS);
-        long hoursUntilNextOccurrence = now.until(nextOccurrence, ChronoUnit.HOURS) % 24;
-        long minutesUntilNextOccurrence = now.until(nextOccurrence, ChronoUnit.MINUTES) % 60;
-        return String.format("%d days, %d hours, and %d minutes", daysUntilNextOccurrence, hoursUntilNextOccurrence, minutesUntilNextOccurrence);
+        return until(now, nextOccurrence);
+    }
+
+    public LocalDateTime lastOccurenceDate(){
+        return firstAiring.plusDays((totalEpisodes - 1) * 7L).atTime(hour, minutes);
+    }
+
+    public String lastOccurenceTime(){
+        return until(LocalDateTime.now(), lastOccurenceDate());
+    }
+
+    @Override
+    public void display(DisplayType type) {
+        switch(type){
+            case NEXT_AIRING -> print("%s is airing in %s\n", name, nextOcurrence());
+            case DAY -> print("\t%s at %s", name, time());
+            case LAST_AIRING -> print("%s last aired in %s (date: %s)\n", name, lastOccurenceTime(), formatDate(lastOccurenceDate()));
+            default -> print("Not supported");
+        }
+    }
+
+    private String formatDate(LocalDateTime date){
+        return String.format("%s/%s/%s", date.getDayOfMonth(), date.getMonthValue(), date.getYear());
     }
 
     public static class AnimeBuilder{
@@ -78,6 +113,8 @@ public class Anime implements PlanningElement {
         private Day day;
         private int hour;
         private int minutes;
+        private LocalDate firstAiring;
+        private int totalEpisodes;
 
         public AnimeBuilder name(String name) {
             this.name = name;
@@ -99,8 +136,18 @@ public class Anime implements PlanningElement {
             return this;
         }
 
+        public AnimeBuilder firstAiring(LocalDate firstAiring) {
+            this.firstAiring = firstAiring;
+            return this;
+        }
+
+        public AnimeBuilder totalEpisodes(int totalEpisodes) {
+            this.totalEpisodes = totalEpisodes;
+            return this;
+        }
+
         public Anime build(){
-            return new Anime(name, day, hour, minutes);
+            return new Anime(name, day, hour, minutes, firstAiring, totalEpisodes);
         }
     }
 }

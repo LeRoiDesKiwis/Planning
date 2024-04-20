@@ -1,6 +1,7 @@
 package fr.leroideskiwis;
 
 import fr.leroideskiwis.planning.Planning;
+import fr.leroideskiwis.planning.PlanningElement;
 import fr.leroideskiwis.planning.anime.AnimePlanningParser;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -8,6 +9,6 @@ import fr.leroideskiwis.planning.anime.AnimePlanningParser;
 public class Main {
     public static void main(String[] args) {
         Planning planning = new Planning(new AnimePlanningParser("planning.txt"));
-        planning.displayNext();
+        planning.display(PlanningElement.DisplayType.LAST_AIRING);
     }
 }

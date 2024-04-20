@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface PlanningParser {
 
-    List<Anime> parse();
+    List<PlanningElement> parse();
+    PlanningElement parseLine(String line);
+
     void save(List<Anime> animes);
 
 }

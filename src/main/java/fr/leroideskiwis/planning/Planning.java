@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static fr.leroideskiwis.util.Util.print;
+
 public class Planning {
 
     private final List<PlanningElement> elements = new ArrayList<>();
@@ -31,18 +33,12 @@ public class Planning {
             print("Day: %s", day);
             elements.stream().
                     filter(planningElement -> planningElement.isDay(day)).
-                    forEach(planningElement -> print("\t%s at %s", planningElement.name(), planningElement.time()));
+                    forEach(planningElement -> planningElement.display(PlanningElement.DisplayType.DAY));
             print("\tTotal: %d", count(day));
         }
     }
 
-    public void displayNext(){
-        for(PlanningElement element : elements){
-            print("%s is airing in %s\n", element.name(), element.nextOcurrence());
-        }
-    }
-
-    private void print(String message, Object... args){
-        System.out.printf((message) + "%n", args);
+    public void display(PlanningElement.DisplayType type){
+        elements.forEach(planningElement -> planningElement.display(type));
     }
 }
