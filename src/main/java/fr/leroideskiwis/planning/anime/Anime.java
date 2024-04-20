@@ -3,11 +3,9 @@ package fr.leroideskiwis.planning.anime;
 import fr.leroideskiwis.Day;
 import fr.leroideskiwis.planning.PlanningElement;
 
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
@@ -97,9 +95,9 @@ public class Anime implements PlanningElement {
     @Override
     public void display(DisplayType type) {
         switch(type){
-            case NEXT_AIRING -> print("%s is airing in %s\n", name, nextOcurrence());
+            case NEXT_OCCURENCE -> print("%s is airing in %s\n", name, nextOcurrence());
             case DAY -> print("\t%s at %s", name, time());
-            case LAST_AIRING -> print("%s last aired in %s (date: %s)\n", name, lastOccurenceTime(), formatDate(lastOccurenceDate()));
+            case LAST_OCCURENCE -> print("%s last aired in %s (date: %s)\n", name, lastOccurenceTime(), formatDate(lastOccurenceDate()));
             default -> print("Not supported");
         }
     }

@@ -14,6 +14,6 @@ public interface PlanningElement {
     void display(DisplayType type);
 
     enum DisplayType {
-        DAY, NEXT_AIRING, LAST_AIRING
+        DAY, NEXT_OCCURENCE, LAST_OCCURENCE
     }
 }

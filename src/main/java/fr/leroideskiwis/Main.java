@@ -9,6 +9,6 @@ import fr.leroideskiwis.planning.anime.AnimePlanningParser;
 public class Main {
     public static void main(String[] args) {
         Planning planning = new Planning(new AnimePlanningParser("planning.txt"));
-        planning.display(PlanningElement.DisplayType.LAST_AIRING);
+        planning.display(PlanningElement.DisplayType.LAST_OCCURENCE);
     }
 }
