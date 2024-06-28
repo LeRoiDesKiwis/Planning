@@ -67,7 +67,7 @@ public class Anime implements PlanningElement {
         long daysUntilNextOccurrence = now.until(date, ChronoUnit.DAYS);
         long hoursUntilNextOccurrence = now.until(date, ChronoUnit.HOURS) % 24;
         long minutesUntilNextOccurrence = now.until(date, ChronoUnit.MINUTES) % 60;
-        return String.format("%d days, %d hours, and %d minutes", daysUntilNextOccurrence, hoursUntilNextOccurrence, minutesUntilNextOccurrence);
+        return String.format("%d days, %d hours, and %d minutes", Math.abs(daysUntilNextOccurrence), Math.abs(hoursUntilNextOccurrence), Math.abs(minutesUntilNextOccurrence));
     }
 
     @Override
