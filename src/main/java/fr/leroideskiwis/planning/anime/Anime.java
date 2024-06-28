@@ -92,12 +92,22 @@ public class Anime implements PlanningElement {
         return until(LocalDateTime.now(), lastOccurenceDate());
     }
 
+    private boolean isFinished(){
+        return lastOccurenceDate().isBefore(LocalDateTime.now());
+    }
+
     @Override
     public void display(DisplayType type) {
         switch(type){
-            case NEXT_OCCURENCE -> print("%s is airing in %s\n", name, nextOcurrence());
-            case DAY -> print("\t%s at %s", name, time());
-            case LAST_OCCURENCE -> print("%s last aired in %s (date: %s)\n", name, lastOccurenceTime(), formatDate(lastOccurenceDate()));
+            case NEXT_OCCURENCE -> {
+                if(isFinished()) print("%s has finished airing", name);
+                else print("%s will air in %s", name, nextOcurrence());
+            }
+            case DAY -> print("\t%s at %s %s", name, time(), (isFinished() ? "(finished)" : ""));
+            case LAST_OCCURENCE -> {
+                if(isFinished()) print("%s finished airing in %s (date: %s)\n", name, lastOccurenceTime(), formatDate(lastOccurenceDate()));
+                else print("%s last aired in %s (date: %s)\n", name, lastOccurenceTime(), formatDate(lastOccurenceDate()));
+            }
             default -> print("Not supported");
         }
     }
